@@ -346,6 +346,40 @@
             "fr": "Envoyer le message"
           }
         }
+      },
+              "footer": {
+        "title": {
+          "ar": "FileFlow",
+          "en": "FileFlow",
+          "fr": "FileFlow"
+        },
+        "description": {
+          "ar": "2024 جميع الحقوق محفوظة",
+          "en": "All rights reserved",
+          "fr": "Tous droits reservés"
+        },
+        "menu": {
+          "home": {
+            "ar": "الرئيسية",
+            "en": "Home",
+            "fr": "Accueil"
+          },
+          "services": {
+            "ar": "خدماتنا",
+            "en": "Our Services",
+            "fr": "Nos Services"
+          },
+          "features": {
+            "ar": "المميزات",
+            "en": "Features",
+            "fr": "Fonctionnalités"
+          },
+          "contact": {
+            "ar": "تواصل معنا",
+            "en": "Contact Us",
+            "fr": "Contactez-Nous"
+          }
+        }
       }
     }
 }
