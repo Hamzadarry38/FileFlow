@@ -1,0 +1,2172 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="منصة متكاملة لتحويل وضغط الملفات بكل سهولة وأمان">
+    <meta property="og:title" content="FileFlow - تحويل وضغط الملفات">
+    <meta property="og:description" content="منصة متكاملة لتحويل وضغط الملفات بكل سهولة وأمان">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#4f46e5">
+    <title>FileFlow - تحويل وضغط الملفات</title>
+    
+    <!-- Styles -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/contact.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/video.js') }}"></script>
+    
+    <!-- Language-specific styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --direction: rtl;
+            --text-align: right;
+            --font-family: 'Cairo', sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            background-color: #f8fafc;
+            direction: var(--direction);
+            text-align: var(--text-align);
+        }
+        
+        /* RTL-specific styles */
+        body.rtl {
+            --direction: rtl;
+            --text-align: right;
+            --font-family: 'Cairo', sans-serif;
+        }
+        
+        /* LTR-specific styles */
+        body.ltr {
+            --direction: ltr;
+            --text-align: left;
+            --font-family: system-ui, -apple-system, sans-serif;
+        }
+        
+        /* Language selector specific styles */
+        #languageSelector {
+            direction: var(--direction);
+            text-align: var(--text-align);
+        }
+        
+        #languageSelector option {
+            direction: ltr;
+            text-align: left;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        
+        /* RTL support for flexbox */
+        .rtl .space-x-8 > :not([hidden]) ~ :not([hidden]) {
+            --tw-space-x-reverse: 1 !important;
+            margin-right: calc(2rem * var(--tw-space-x-reverse));
+            margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
+        }
+        
+        /* Form input RTL support */
+        .rtl input,
+        .rtl textarea {
+            text-align: right;
+        }
+        
+        .ltr input,
+        .ltr textarea {
+            text-align: left;
+        }
+        
+        .logo-animation {
+            animation: flowAnimation 3s infinite ease-in-out;
+        }
+        
+        @keyframes flowAnimation {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        html {
+            scroll-behavior: smooth; /* إضافة تأثير التمرير السلس */
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f8fafc;
+        }
+        .service-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(99, 102, 241, 0.1), rgba(99, 102, 241, 0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.1);
+        }
+        .service-card:hover::before {
+            opacity: 1;
+        }
+        .upload-zone {
+            border: 2px dashed #818cf8;
+            background-color: #f5f7ff;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .upload-zone:hover {
+            border-color: #6366f1;
+            background-color: #eef2ff;
+            transform: scale(1.01);
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            background-color: transparent;
+            color: #4B5563;  /* text-gray-600 */
+        }
+        .nav-link:hover {
+            background-color: #F3F4F6;  /* hover:bg-gray-100 */
+        }
+        .nav-link.active {
+            background-color: #4F46E5;  /* bg-indigo-600 */
+            color: white;
+        }
+        .nav-link.active:hover {
+            background-color: #4338CA;  /* hover:bg-indigo-700 */
+        }
+        select, input[type="url"] {
+            transition: all 0.2s ease;
+        }
+        select:hover, input[type="url"]:hover {
+            border-color: #818cf8;
+        }
+        button {
+            position: relative;
+            overflow: hidden;
+        }
+        button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            transition: transform 0.6s ease, opacity 0.4s ease;
+        }
+        button:hover::after {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        .progress-bar-container {
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #818cf8, #6366f1);
+            border-radius: 999px;
+            transition: width 0.3s ease;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .upload-zone svg {
+            animation: pulse 2s infinite;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        }
+        
+        /* إضافة تأثير الموجة */
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="1" d="M0,96L48,106.7C96,117,192,139,288,154.7C384,171,480,181,576,165.3C672,149,768,107,864,90.7C960,75,1056,85,1152,90.7C1248,96,1344,96,1392,96L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            background-repeat: no-repeat;
+            animation: wave 10s linear infinite;
+        }
+        
+        .wave:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.5" d="M0,96L48,112C96,128,192,160,288,165.3C384,171,480,149,576,128C672,107,768,85,864,90.7C960,96,1056,128,1152,144C1248,160,1344,160,1392,160L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            background-repeat: no-repeat;
+            opacity: 0.5;
+            animation: wave 8s linear infinite reverse;
+        }
+        
+        @keyframes wave {
+            0% {
+                background-position-x: 0;
+            }
+            100% {
+                background-position-x: 1440px;
+            }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes glow {
+            0% { filter: drop-shadow(0 0 2px #4f46e5) drop-shadow(0 0 4px #4f46e5); }
+            50% { filter: drop-shadow(0 0 8px #4f46e5) drop-shadow(0 0 12px #4f46e5); }
+            100% { filter: drop-shadow(0 0 2px #4f46e5) drop-shadow(0 0 4px #4f46e5); }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .logo-container {
+            position: relative;
+            display: inline-block;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .logo-main {
+            width: 80px;
+            height: 80px;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        .logo-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            border: 2px solid #4f46e5;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: rotate 10s linear infinite;
+        }
+
+        .logo-particles {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #4f46e5;
+            border-radius: 50%;
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        /* تأثير رسم المسار */
+        .draw-path {
+            stroke-dasharray: 300;
+            stroke-dashoffset: 300;
+            animation: drawPath 20s cubic-bezier(0.23, 1, 0.32, 1) infinite;
+            filter: drop-shadow(0 0 2px rgba(79, 70, 229, 0.3));
+        }
+
+        .draw-path-delay-1 {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: drawPathDelay 20s cubic-bezier(0.23, 1, 0.32, 1) infinite;
+            filter: drop-shadow(0 0 2px rgba(79, 70, 229, 0.3));
+        }
+
+        .folder-shadow {
+            animation: folderShadow 20s cubic-bezier(0.23, 1, 0.32, 1) infinite;
+        }
+
+        @keyframes folderShadow {
+            0%, 100% { opacity: 0; }
+            35%, 85% { opacity: 0.2; }
+        }
+
+        @keyframes drawPath {
+            0%, 45%, 95%, 100% {
+                stroke-dashoffset: 300;
+                opacity: 0;
+                filter: drop-shadow(0 0 0 rgba(79, 70, 229, 0));
+            }
+            25%, 75% {
+                opacity: 1;
+                stroke-dashoffset: 0;
+                filter: drop-shadow(0 0 4px rgba(79, 70, 229, 0.5));
+            }
+            35%, 85% {
+                opacity: 1;
+                stroke-dashoffset: -32;
+                filter: drop-shadow(0 0 2px rgba(79, 70, 229, 0.3));
+            }
+        }
+
+        @keyframes drawPathDelay {
+            0%, 100% {
+                stroke-dashoffset: 100;
+                opacity: 0;
+            }
+            15%, 35%, 75%, 85% {
+                opacity: 1;
+                stroke-dashoffset: 0;
+            }
+            25%, 65% {
+                opacity: 1;
+                stroke-dashoffset: -32;
+            }
+        }
+
+        .flow-line {
+            stroke-dasharray: 16;
+            opacity: 0;
+            animation: flowLine 20s cubic-bezier(0.23, 1, 0.32, 1) infinite;
+            filter: drop-shadow(0 0 2px rgba(79, 70, 229, 0.3));
+        }
+
+        @keyframes flowLine {
+            0%, 45%, 95%, 100% {
+                opacity: 0;
+                stroke-dashoffset: 32;
+                filter: drop-shadow(0 0 0 rgba(79, 70, 229, 0));
+            }
+            25%, 75% {
+                opacity: 1;
+                stroke-dashoffset: 0;
+                filter: drop-shadow(0 0 3px rgba(79, 70, 229, 0.4));
+            }
+            35%, 85% {
+                opacity: 1;
+                stroke-dashoffset: -32;
+                filter: drop-shadow(0 0 2px rgba(79, 70, 229, 0.3));
+            }
+        }
+
+        .glow-dot {
+            animation: glowDot 20s cubic-bezier(0.23, 1, 0.32, 1) infinite;
+        }
+
+        .glow-dot-delay {
+            animation: glowDot 20s cubic-bezier(0.23, 1, 0.32, 1) infinite;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes glowDot {
+            0%, 45%, 95%, 100% {
+                opacity: 0;
+                filter: blur(0);
+                transform: scale(1);
+            }
+            35%, 85% {
+                opacity: 1;
+                filter: blur(1px);
+                transform: scale(1.5);
+            }
+        }
+
+        .draw-path {
+            stroke-dasharray: 300;
+            stroke-dashoffset: 300;
+            animation: drawPath 30s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+            filter: drop-shadow(0 0 2px rgba(79, 70, 229, 0.3));
+        }
+
+        .draw-path-delay-1 {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: drawPathDelay 30s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+            filter: drop-shadow(0 0 2px rgba(79, 70, 229, 0.3));
+        }
+
+        .folder-shadow {
+            animation: folderShadow 30s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+        }
+
+        @keyframes drawPath {
+            0%, 100% {
+                stroke-dashoffset: 300;
+                opacity: 0;
+                filter: drop-shadow(0 0 0 rgba(79, 70, 229, 0));
+            }
+            3% {
+                stroke-dashoffset: 300;
+                opacity: 0.3;
+            }
+            20% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+                filter: drop-shadow(0 0 8px rgba(79, 70, 229, 0.6));
+            }
+            30% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+                filter: drop-shadow(0 0 4px rgba(79, 70, 229, 0.5));
+            }
+            40% {
+                stroke-dashoffset: 300;
+                opacity: 1;
+                filter: drop-shadow(0 0 0 rgba(79, 70, 229, 0));
+            }
+            45% {
+                opacity: 0;
+            }
+            53% {
+                stroke-dashoffset: 300;
+                opacity: 0.3;
+            }
+            70% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+                filter: drop-shadow(0 0 8px rgba(79, 70, 229, 0.6));
+            }
+            80% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+                filter: drop-shadow(0 0 4px rgba(79, 70, 229, 0.5));
+            }
+            90% {
+                stroke-dashoffset: 300;
+                opacity: 1;
+                filter: drop-shadow(0 0 0 rgba(79, 70, 229, 0));
+            }
+            95% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes drawPathDelay {
+            0%, 100% {
+                stroke-dashoffset: 100;
+                opacity: 0;
+            }
+            10% {
+                stroke-dashoffset: 100;
+                opacity: 0.3;
+            }
+            20% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+            30% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+            40% {
+                stroke-dashoffset: 100;
+                opacity: 1;
+            }
+            45% {
+                opacity: 0;
+            }
+            60% {
+                stroke-dashoffset: 100;
+                opacity: 0.3;
+            }
+            70% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+            80% {
+                stroke-dashoffset: 0;
+                opacity: 1;
+            }
+            90% {
+                stroke-dashoffset: 100;
+                opacity: 1;
+            }
+            95% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes folderShadow {
+            0%, 45%, 95%, 100% { 
+                opacity: 0; 
+            }
+            20%, 30%, 70%, 80% { 
+                opacity: 0.3;
+                filter: blur(4px);
+            }
+        }
+
+        .glow-dot {
+            animation: glowDot 30s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+        }
+
+        .glow-dot-delay {
+            animation: glowDot 30s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes glowDot {
+            0%, 45%, 95%, 100% {
+                opacity: 0;
+                filter: blur(0);
+                transform: scale(1);
+            }
+            20%, 30%, 70%, 80% {
+                opacity: 1;
+                filter: blur(2px);
+                transform: scale(2);
+            }
+        }
+
+        .flow-line {
+            stroke-dasharray: 16;
+            opacity: 0;
+            animation: flowLine 30s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+            filter: drop-shadow(0 0 2px rgba(79, 70, 229, 0.3));
+        }
+
+        @keyframes flowLine {
+            0%, 45%, 95%, 100% {
+                opacity: 0;
+                stroke-dashoffset: 32;
+                filter: drop-shadow(0 0 0 rgba(79, 70, 229, 0));
+            }
+            20%, 30%, 70%, 80% {
+                opacity: 1;
+                stroke-dashoffset: 0;
+                filter: drop-shadow(0 0 6px rgba(79, 70, 229, 0.6));
+            }
+            25%, 75% {
+                opacity: 1;
+                stroke-dashoffset: -32;
+                filter: drop-shadow(0 0 4px rgba(79, 70, 229, 0.4));
+            }
+        }
+
+        /* إضافة تأثير النبض للخلفية */
+        .folder-background {
+            animation: pulseBackground 30s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+        }
+
+        @keyframes pulseBackground {
+            0%, 45%, 95%, 100% {
+                opacity: 0.1;
+                transform: scale(1);
+            }
+            20%, 30%, 70%, 80% {
+                opacity: 0.3;
+                transform: scale(1.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="fixed top-0 left-0 right-0 bg-white bg-opacity-90 backdrop-blur-lg z-40 shadow-sm">
+        <nav class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-8 rtl:space-x-reverse">
+                    <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse group">
+                        <div class="relative w-12 h-10">
+                            <!-- توهج خلفي -->
+                            <div class="absolute inset-0 bg-indigo-500/10 blur-xl rounded-full"></div>
+                            
+                            <svg class="w-12 h-10 relative z-10" viewBox="0 0 48 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <!-- تدرج المجلد -->
+                                    <linearGradient id="header-folder-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#4F46E5"/>
+                                        <stop offset="50%" stop-color="#818CF8"/>
+                                        <stop offset="100%" stop-color="#4F46E5"/>
+                                    </linearGradient>
+
+                                    <!-- تأثير التوهج -->
+                                    <filter id="header-glow" x="-20%" y="-20%" width="140%" height="140%">
+                                        <feGaussianBlur stdDeviation="2" result="blur"/>
+                                        <feMerge>
+                                            <feMergeNode in="blur"/>
+                                            <feMergeNode in="SourceGraphic"/>
+                                        </feMerge>
+                                    </filter>
+
+                                    <!-- ظل خلفي -->
+                                    <filter id="header-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                                        <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.2" flood-color="#4F46E5"/>
+                                    </filter>
+                                </defs>
+
+                                <!-- الظل -->
+                                <path class="folder-shadow"
+                                    d="M6 10C6 8 8 6 10 6H18L22 12H38C40 12 42 14 42 16V34C42 36 40 38 38 38H10C8 38 6 36 6 34V10Z"
+                                    fill="#4F46E5"
+                                    opacity="0.1"
+                                    filter="url(#header-shadow)"/>
+
+                                <!-- المجلد الأساسي -->
+                                <g filter="url(#header-glow)">
+                                    <path class="draw-path"
+                                        d="M6 10C6 8 8 6 10 6H18L22 12H38C40 12 42 14 42 16V34C42 36 40 38 38 38H10C8 38 6 36 6 34V10Z"
+                                        stroke="url(#header-folder-gradient)"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        fill="none"/>
+
+                                    <!-- طية المجلد -->
+                                    <path class="draw-path-delay-1"
+                                        d="M18 6L22 12"
+                                        stroke="url(#header-folder-gradient)"
+                                        stroke-width="2"
+                                        stroke-linecap="round"/>
+
+                                    <!-- خط متحرك -->
+                                    <path class="flow-line"
+                                        d="M16 24Q24 24, 24 28Q24 32, 32 32"
+                                        stroke="url(#header-folder-gradient)"
+                                        stroke-width="2"
+                                        fill="none"
+                                        stroke-linecap="round"/>
+
+                                    <!-- نقاط متوهجة -->
+                                    <circle class="glow-dot" cx="16" cy="24" r="2" fill="url(#header-folder-gradient)"/>
+                                    <circle class="glow-dot-delay" cx="32" cy="32" r="2" fill="url(#header-folder-gradient)"/>
+                                </g>
+                            </svg>
+
+                            <style>
+                                .draw-path {
+                                    stroke-dasharray: 200;
+                                    stroke-dashoffset: 200;
+                                    animation: drawPath 12s ease-in-out infinite;
+                                }
+
+                                .draw-path-delay-1 {
+                                    stroke-dasharray: 50;
+                                    stroke-dashoffset: 50;
+                                    animation: drawPathDelay 12s ease-in-out infinite;
+                                }
+
+                                .flow-line {
+                                    stroke-dasharray: 50;
+                                    stroke-dashoffset: 50;
+                                    opacity: 0;
+                                    animation: flowLine 12s ease-in-out infinite;
+                                }
+
+                                .glow-dot {
+                                    opacity: 0;
+                                    animation: glowDot 12s ease-in-out infinite;
+                                }
+
+                                .glow-dot-delay {
+                                    opacity: 0;
+                                    animation: glowDot 12s ease-in-out infinite;
+                                    animation-delay: 0.5s;
+                                }
+
+                                .folder-shadow {
+                                    animation: shadowPulse 12s ease-in-out infinite;
+                                }
+
+                                @keyframes drawPath {
+                                    0%, 100% {
+                                        stroke-dashoffset: 200;
+                                        opacity: 0;
+                                    }
+                                    10% {
+                                        stroke-dashoffset: 200;
+                                        opacity: 1;
+                                    }
+                                    30%, 70% {
+                                        stroke-dashoffset: 0;
+                                        opacity: 1;
+                                    }
+                                    90% {
+                                        stroke-dashoffset: 200;
+                                        opacity: 1;
+                                    }
+                                }
+
+                                @keyframes drawPathDelay {
+                                    0%, 100% {
+                                        stroke-dashoffset: 50;
+                                        opacity: 0;
+                                    }
+                                    15% {
+                                        stroke-dashoffset: 50;
+                                        opacity: 1;
+                                    }
+                                    35%, 65% {
+                                        stroke-dashoffset: 0;
+                                        opacity: 1;
+                                    }
+                                    85% {
+                                        stroke-dashoffset: 50;
+                                        opacity: 1;
+                                    }
+                                }
+
+                                @keyframes flowLine {
+                                    0%, 20%, 100% {
+                                        stroke-dashoffset: 50;
+                                        opacity: 0;
+                                    }
+                                    30% {
+                                        stroke-dashoffset: 50;
+                                        opacity: 1;
+                                    }
+                                    70% {
+                                        stroke-dashoffset: 0;
+                                        opacity: 1;
+                                    }
+                                    80% {
+                                        stroke-dashoffset: 0;
+                                        opacity: 0;
+                                    }
+                                }
+
+                                @keyframes glowDot {
+                                    0%, 20%, 80%, 100% {
+                                        opacity: 0;
+                                        transform: scale(1);
+                                        filter: blur(0);
+                                    }
+                                    30%, 70% {
+                                        opacity: 1;
+                                        transform: scale(1.5);
+                                        filter: blur(1px);
+                                    }
+                                }
+
+                                @keyframes shadowPulse {
+                                    0%, 100% {
+                                        opacity: 0.1;
+                                        transform: scale(1);
+                                    }
+                                    30%, 70% {
+                                        opacity: 0.2;
+                                        transform: scale(1.05);
+                                    }
+                                }
+                            </style>
+                        </div>
+                        <span class="text-2xl font-bold text-indigo-600">FileFlow</span>
+                    </a>
+                    <div class="hidden md:flex space-x-8 rtl:space-x-reverse">
+                        <a href="#home" class="nav-link text-gray-600 hover:text-indigo-600" data-menu="home">الرئيسية</a>
+                        <a href="#services" class="nav-link text-gray-600 hover:text-indigo-600" data-menu="services">خدماتنا</a>
+                        <a href="#features" class="nav-link text-gray-600 hover:text-indigo-600" data-menu="features">المميزات</a>
+                        <a href="#contact" class="nav-link text-gray-600 hover:text-indigo-600" data-menu="contact">اتصل بنا</a>
+                    </div>
+                </div>
+                
+                <!-- Language Selector -->
+                <div class="relative group">
+                    <select id="languageSelector" 
+                            class="appearance-none bg-white bg-opacity-90 backdrop-blur-lg rounded-lg pl-10 pr-4 py-2 text-gray-700 border border-gray-200 
+                                   shadow-sm hover:border-indigo-500 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500
+                                   rtl:pl-4 rtl:pr-10">
+                        <option value="ar" selected>🇸🇦 العربية</option>
+                        <option value="en">🇺🇸 English</option>
+                        <option value="fr">🇫🇷 Français</option>
+                    </select>
+                    <div class="absolute inset-y-0 left-0 rtl:left-auto rtl:right-0 flex items-center px-2 pointer-events-none text-gray-500">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7m0 0l-7-7m7 7V3"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14l4 4 4-4"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="pt-16">
+        <!-- قسم الهيرو -->
+        <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-600 to-purple-800">
+            <!-- الخلفية المتحركة -->
+            <div class="absolute inset-0">
+                <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2H36zM6 34v-4H4v4H0v2h4v4h2V6h4V4H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')"></div>
+            </div>
+
+            <!-- العناصر المتحركة -->
+            <div class="absolute inset-0 overflow-hidden">
+                <div class="floating-elements">
+                    <svg class="absolute" style="top: 10%; left: 5%; animation: float 8s infinite;" width="60" height="60" viewBox="0 0 60 60" fill="none">
+                        <path d="M30 0L60 30L30 60L0 30L30 0Z" fill="rgba(255,255,255,0.1)"/>
+                    </svg>
+                    <svg class="absolute" style="top: 70%; left: 80%; animation: float 6s infinite;" width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <circle cx="20" cy="20" r="20" fill="rgba(255,255,255,0.1)"/>
+                    </svg>
+                    <svg class="absolute" style="top: 40%; left: 90%; animation: float 10s infinite;" width="50" height="50" viewBox="0 0 50 50" fill="none">
+                        <rect width="50" height="50" rx="10" fill="rgba(255,255,255,0.1)"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- المحتوى الرئيسي -->
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="text-center">
+                    <!-- الشعار المتحرك -->
+                    <div class="mb-8 flex justify-center">
+                        <div class="relative w-32 h-32 bg-white rounded-2xl shadow-lg p-4">
+                            <!-- توهج خلفي -->
+                            <div class="absolute inset-0 bg-indigo-500/10 blur-xl rounded-2xl"></div>
+                            
+                            <svg class="w-full h-full relative z-10" viewBox="0 0 48 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <!-- تدرج المجلد -->
+                                    <linearGradient id="main-folder-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#4F46E5"/>
+                                        <stop offset="50%" stop-color="#818CF8"/>
+                                        <stop offset="100%" stop-color="#4F46E5"/>
+                                    </linearGradient>
+
+                                    <!-- تأثير التوهج -->
+                                    <filter id="main-glow" x="-20%" y="-20%" width="140%" height="140%">
+                                        <feGaussianBlur stdDeviation="2" result="blur"/>
+                                        <feMerge>
+                                            <feMergeNode in="blur"/>
+                                            <feMergeNode in="SourceGraphic"/>
+                                        </feMerge>
+                                    </filter>
+
+                                    <!-- ظل خلفي -->
+                                    <filter id="main-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                                        <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.2" flood-color="#4F46E5"/>
+                                    </filter>
+                                </defs>
+
+                                <!-- الظل -->
+                                <path class="folder-shadow"
+                                    d="M6 10C6 8 8 6 10 6H18L22 12H38C40 12 42 14 42 16V34C42 36 40 38 38 38H10C8 38 6 36 6 34V10Z"
+                                    fill="#4F46E5"
+                                    opacity="0.1"
+                                    filter="url(#main-shadow)"/>
+
+                                <!-- المجلد الأساسي -->
+                                <g filter="url(#main-glow)">
+                                    <path class="draw-path"
+                                        d="M6 10C6 8 8 6 10 6H18L22 12H38C40 12 42 14 42 16V34C42 36 40 38 38 38H10C8 38 6 36 6 34V10Z"
+                                        stroke="url(#main-folder-gradient)"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        fill="none"/>
+
+                                    <!-- طية المجلد -->
+                                    <path class="draw-path-delay-1"
+                                        d="M18 6L22 12"
+                                        stroke="url(#main-folder-gradient)"
+                                        stroke-width="2"
+                                        stroke-linecap="round"/>
+
+                                    <!-- خط متحرك -->
+                                    <path class="flow-line"
+                                        d="M16 24Q24 24, 24 28Q24 32, 32 32"
+                                        stroke="url(#main-folder-gradient)"
+                                        stroke-width="2"
+                                        fill="none"
+                                        stroke-linecap="round"/>
+
+                                    <!-- نقاط متوهجة -->
+                                    <circle class="glow-dot" cx="16" cy="24" r="2" fill="url(#main-folder-gradient)"/>
+                                    <circle class="glow-dot-delay" cx="32" cy="32" r="2" fill="url(#main-folder-gradient)"/>
+                                </g>
+                            </svg>
+
+                            <style>
+                                .draw-path {
+                                    stroke-dasharray: 200;
+                                    stroke-dashoffset: 200;
+                                    animation: drawPath 12s ease-in-out infinite;
+                                }
+
+                                .draw-path-delay-1 {
+                                    stroke-dasharray: 50;
+                                    stroke-dashoffset: 50;
+                                    animation: drawPathDelay 12s ease-in-out infinite;
+                                }
+
+                                .flow-line {
+                                    stroke-dasharray: 50;
+                                    stroke-dashoffset: 50;
+                                    opacity: 0;
+                                    animation: flowLine 12s ease-in-out infinite;
+                                }
+
+                                .glow-dot {
+                                    opacity: 0;
+                                    animation: glowDot 12s ease-in-out infinite;
+                                }
+
+                                .glow-dot-delay {
+                                    opacity: 0;
+                                    animation: glowDot 12s ease-in-out infinite;
+                                    animation-delay: 0.5s;
+                                }
+
+                                .folder-shadow {
+                                    animation: shadowPulse 12s ease-in-out infinite;
+                                }
+
+                                @keyframes drawPath {
+                                    0%, 100% {
+                                        stroke-dashoffset: 200;
+                                        opacity: 0;
+                                    }
+                                    10% {
+                                        stroke-dashoffset: 200;
+                                        opacity: 1;
+                                    }
+                                    30%, 70% {
+                                        stroke-dashoffset: 0;
+                                        opacity: 1;
+                                    }
+                                    90% {
+                                        stroke-dashoffset: 200;
+                                        opacity: 1;
+                                    }
+                                }
+
+                                @keyframes drawPathDelay {
+                                    0%, 100% {
+                                        stroke-dashoffset: 50;
+                                        opacity: 0;
+                                    }
+                                    15% {
+                                        stroke-dashoffset: 50;
+                                        opacity: 1;
+                                    }
+                                    35%, 65% {
+                                        stroke-dashoffset: 0;
+                                        opacity: 1;
+                                    }
+                                    85% {
+                                        stroke-dashoffset: 50;
+                                        opacity: 1;
+                                    }
+                                }
+
+                                @keyframes flowLine {
+                                    0%, 20%, 100% {
+                                        stroke-dashoffset: 50;
+                                        opacity: 0;
+                                    }
+                                    30% {
+                                        stroke-dashoffset: 50;
+                                        opacity: 1;
+                                    }
+                                    70% {
+                                        stroke-dashoffset: 0;
+                                        opacity: 1;
+                                    }
+                                    80% {
+                                        stroke-dashoffset: 0;
+                                        opacity: 0;
+                                    }
+                                }
+
+                                @keyframes glowDot {
+                                    0%, 20%, 80%, 100% {
+                                        opacity: 0;
+                                        transform: scale(1);
+                                        filter: blur(0);
+                                    }
+                                    30%, 70% {
+                                        opacity: 1;
+                                        transform: scale(1.5);
+                                        filter: blur(1px);
+                                    }
+                                }
+
+                                @keyframes shadowPulse {
+                                    0%, 100% {
+                                        opacity: 0.1;
+                                        transform: scale(1);
+                                    }
+                                    30%, 70% {
+                                        opacity: 0.2;
+                                        transform: scale(1.05);
+                                    }
+                                }
+                            </style>
+                        </div>
+                    </div>
+
+                    <!-- العنوان الرئيسي -->
+                    <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
+                        <span class="inline-block transform hover:scale-105 transition-transform">FileFlow</span>
+                        <span class="block text-3xl md:text-4xl mt-4 text-indigo-200" data-hero="title">حول ملفاتك بسهولة وسرعة</span>
+                    </h1>
+
+                    <!-- الوصف -->
+                    <p class="text-xl md:text-2xl text-indigo-100 mb-12 max-w-3xl mx-auto leading-relaxed" data-hero="description">منصة متكاملة لتحويل وضغط الملفات بكل سهولة وأمان</p>
+
+                    <!-- الأزرار -->
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <a href="#services" 
+                           class="bg-white text-indigo-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-opacity-95 transform hover:scale-105 transition-all shadow-lg hover:shadow-xl" 
+                           data-translate="hero.cta.start_now">ابدأ الآن →</a>
+                        <a href="#features" 
+                           class="bg-indigo-700 bg-opacity-50 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-opacity-75 transform hover:scale-105 transition-all border-2 border-indigo-400" 
+                           data-translate="hero.cta.learn_features">تعرف على المميزات</a>
+                    </div>
+
+                    <!-- أيقونات الميزات -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16 max-w-4xl mx-auto">
+                        <div class="bg-white bg-opacity-10 backdrop-blur-lg p-6 rounded-2xl transform hover:scale-105 transition-all">
+                            <div class="text-white text-4xl mb-4">
+                                <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l-7 7m0 0l-7-7m7 7V3"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14l4 4 4-4"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-white font-bold" data-translate="services.0.title">تحويل الصوت</h3>
+                        </div>
+                        <div class="bg-white bg-opacity-10 backdrop-blur-lg p-6 rounded-2xl transform hover:scale-105 transition-all">
+                            <div class="text-white text-4xl mb-4">
+                                <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-white font-bold" data-translate="services.1.title">تحويل الفيديو إلى صوت</h3>
+                        </div>
+                        <div class="bg-white bg-opacity-10 backdrop-blur-lg p-6 rounded-2xl transform hover:scale-105 transition-all">
+                            <div class="text-white text-4xl mb-4">
+                                <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14l4 4 4-4"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-white font-bold" data-translate="services.2.title">ضغط الصور</h3>
+                        </div>
+                        <div class="bg-white bg-opacity-10 backdrop-blur-lg p-6 rounded-2xl transform hover:scale-105 transition-all">
+                            <div class="text-white text-4xl mb-4">
+                                <svg class="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-white font-bold" data-translate="services.3.title">تحميل الصور</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- موجة متحركة في الأسفل -->
+            <div class="absolute bottom-0 left-0 right-0">
+                <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                    <defs>
+                        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                    </defs>
+                    <g class="parallax">
+                        <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+                        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+                        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+                        <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+                    </g>
+                </svg>
+            </div>
+        </section>
+
+        <style>
+            .floating-elements svg {
+                animation-timing-function: ease-in-out;
+                animation-iteration-count: infinite;
+                animation-direction: alternate;
+            }
+
+            @keyframes float {
+                0% { transform: translateY(0px); }
+                50% { transform: translateY(-20px); }
+                100% { transform: translateY(0px); }
+            }
+
+            .animate-dash {
+                stroke-dasharray: 60;
+                stroke-dashoffset: 60;
+                animation: dash 3s infinite;
+            }
+
+            @keyframes dash {
+                to {
+                    stroke-dashoffset: 0;
+                }
+            }
+
+            .waves {
+                position: relative;
+                width: 100%;
+                height: 15vh;
+                margin-bottom: -7px;
+                min-height: 100px;
+                max-height: 150px;
+            }
+
+            .parallax > use {
+                animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+            }
+            .parallax > use:nth-child(1) {
+                animation-delay: -2s;
+                animation-duration: 7s;
+            }
+            .parallax > use:nth-child(2) {
+                animation-delay: -3s;
+                animation-duration: 10s;
+            }
+            .parallax > use:nth-child(3) {
+                animation-delay: -4s;
+                animation-duration: 13s;
+            }
+            .parallax > use:nth-child(4) {
+                animation-delay: -5s;
+                animation-duration: 20s;
+            }
+
+            @keyframes move-forever {
+                0% { transform: translate3d(-90px,0,0); }
+                100% { transform: translate3d(85px,0,0); }
+            }
+        </style>
+
+        <!-- الخدمات -->
+        <section id="services" class="bg-white py-12">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-12" data-translate="title_services">خدمات FileFlow</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="service-card rounded-xl p-6 text-center">
+                        <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2" data-translate="services.0.title">تحويل الصوت</h3>
+                        <p class="text-gray-600" data-translate="services.0.description">تحويل ملفات الصوت إلى صيغ مختلفة</p>
+                    </div>
+
+                    <div class="service-card rounded-xl p-6 text-center">
+                        <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2" data-translate="services.1.title">تحويل الفيديو إلى صوت</h3>
+                        <p class="text-gray-600" data-translate="services.1.description">تحويل الفيديو إلى صوت بجودة عالية</p>
+                    </div>
+
+                    <div class="service-card rounded-xl p-6 text-center">
+                        <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14l4 4 4-4"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2" data-translate="services.2.title">ضغط الصور</h3>
+                        <p class="text-gray-600" data-translate="services.2.description">ضغط حجم الصور مع الحفاظ على جودتها</p>
+                    </div>
+
+                    <div class="service-card rounded-xl p-6 text-center">
+                        <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2" data-translate="services.3.title">تحميل الصور</h3>
+                        <p class="text-gray-600" data-translate="services.3.description">تحميل الصور من المواقع بسهولة</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- شريط التنقل -->
+        <div class="container mx-auto px-4 py-6">
+            <div class="bg-white rounded-lg shadow-sm p-2">
+                <div class="grid grid-cols-4 gap-2">
+                    <button onclick="showSection('audioSection')" class="nav-link p-3 rounded-lg text-center transition-all" data-translate="services.0.title">تحويل الصوت</button>
+                    <button onclick="showSection('videoSection')" class="nav-link p-3 rounded-lg text-center transition-all" data-translate="services.1.title">تحويل الفيديو</button>
+                    <button onclick="showSection('imageSection')" class="nav-link p-3 rounded-lg text-center transition-all" data-translate="services.2.title">ضغط الصور</button>
+                    <button onclick="showSection('downloadSection')" class="nav-link p-3 rounded-lg text-center transition-all" data-translate="services.3.title">تحميل الصور</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- منطقة التحويل -->
+        <div class="container mx-auto px-4 pb-12">
+            <div class="bg-white rounded-xl shadow-sm p-8">
+                <!-- قسم تحويل الصوت -->
+                <div id="audioSection" class="section">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6" data-translate="services.0.title">تحويل صيغة الصوت</h2>
+                    <div class="max-w-xl mx-auto">
+                        <!-- منطقة اختيار ملف الصوت -->
+                        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-8 rounded-xl shadow-sm border-2 border-dashed border-blue-200 hover:border-blue-400 transition-all duration-300">
+                            <div class="text-center space-y-4">
+                                <div class="relative group cursor-pointer">
+                                    <input type="file" id="audioFile" accept="audio/*" 
+                                        class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                                    <div class="flex flex-col items-center space-y-4 pointer-events-none">
+                                        <!-- أيقونة الصوت -->
+                                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                            </svg>
+                                        </div>
+                                        <!-- نص الإرشاد -->
+                                        <div class="text-center">
+                                            <p class="text-lg font-semibold text-blue-700 group-hover:text-blue-800" data-translate="services_web.services_one_site.service_title">
+                                                اختر ملف صوتي
+                                            </p>
+                                            <p class="text-sm text-gray-500 group-hover:text-gray-600" data-translate="services_web.services_one_site.service_description">
+                                                أو قم بسحب وإفلات الملف هنا
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- عرض اسم الملف المختار -->
+                                <div id="selectedAudioName" class="hidden">
+                                    <div class="flex items-center justify-center space-x-2 rtl:space-x-reverse bg-white px-4 py-2 rounded-lg">
+                                        <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                        <span class="text-sm font-medium text-gray-700"></span>
+                                    </div>
+                                </div>
+                                <!-- الصيغ المدعومة -->
+                                <div class="flex flex-wrap justify-center gap-2">
+                                    <span class="px-3 py-1 text-xs font-medium text-blue-600 bg-blue-100 rounded-full">MP3</span>
+                                    <span class="px-3 py-1 text-xs font-medium text-indigo-600 bg-indigo-100 rounded-full">WAV</span>
+                                    <span class="px-3 py-1 text-xs font-medium text-purple-600 bg-purple-100 rounded-full">AAC</span>
+                                    <span class="px-3 py-1 text-xs font-medium text-pink-600 bg-pink-100 rounded-full">OGG</span>
+                                    <span class="px-3 py-1 text-xs font-medium text-red-600 bg-red-100 rounded-full">M4A</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- اختيار صيغة التحويل -->
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                            <label class="block text-gray-700 font-medium mb-3" data-translate="services_web.services_one_site.format_title" >اختر صيغة التحويل:</label>
+                            <select id="audioFormat" name="audioFormat" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <option value="" disabled selected data-translate="services_web.services_one_site.format_options" >اختر الصيغة</option>
+                                <option value="aac">AAC - Advanced Audio Coding</option>
+                                <option value="aif">AIF - Audio Interchange File Format</option>
+                                <option value="aiff">AIFF - Audio Interchange File Format</option>
+                                <option value="au">AU - Audio File Format</option>
+                                <option value="caf">CAF - Core Audio Format</option>
+                                <option value="dts">DTS - Digital Theater Systems</option>
+                                <option value="flac">FLAC - Free Lossless Audio Codec</option>
+                                <option value="gsm">GSM - Global System for Mobile Audio</option>
+                                <option value="m4a">M4A - MPEG-4 Audio</option>
+                                <option value="m4b">M4B - MPEG-4 Audiobook</option>
+                                <option value="m4r">M4R - iPhone Ringtone</option>
+                                <option value="mka">MKA - Matroska Audio</option>
+                                <option value="mmf">MMF - Mobile Music Format</option>
+                                <option value="mp2">MP2 - MPEG-1 Audio Layer II</option>
+                                <option value="mp3">MP3 - MPEG-1 Audio Layer III</option>
+                                <option value="mpa">MPA - MPEG Audio</option>
+                                <option value="oga">OGA - Ogg Audio</option>
+                                <option value="ogg">OGG - Ogg Vorbis Audio</option>
+                                <option value="opus">OPUS - Opus Audio Format</option>
+                                <option value="ra">RA - RealAudio</option>
+                                <option value="voc">VOC - Creative Voice File</option>
+                                <option value="wav">WAV - Waveform Audio Format</option>
+                                <option value="wma">WMA - Windows Media Audio</option>
+                            </select>
+                        </div>
+
+                        <!-- زر التحويل -->
+                        <button onclick="convertAudioFormat()" id="audioConvertButton" class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors" data-translate="services_web.services_one_site.convert_button">   
+                            تحويل الصوت
+                        </button>
+
+                        <!-- شريط التقدم -->
+                        <div id="audioProgress" class="hidden mt-4">
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div id="audioProgressBar" class="bg-blue-600 h-2.5 rounded-full" style="width: 0%"></div>
+                            </div>
+                            <p id="audioProgressText" class="text-sm text-gray-600 mt-2 text-center"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- قسم تحويل الفيديو -->
+                <div id="videoSection" class="section hidden">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6" data-translate="services_web.services_two_site.service_title">تحويل الفيديو إلى صوت</h2>
+                    <div class="max-w-xl mx-auto">
+                        <div class="space-y-4">
+                            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                                <label for="videoFile" class="block text-gray-700 font-medium mb-2" data-translate="services_web.services_two_site.service_title">اختر ملف الفيديو:</label>
+                                <div class="bg-gradient-to-r from-indigo-50 to-purple-50 p-8 rounded-xl shadow-sm border-2 border-dashed border-indigo-200 hover:border-indigo-400 transition-all duration-300">
+                                    <div class="text-center space-y-4">
+                                        <div class="relative group cursor-pointer">
+                                            <input type="file" id="videoFile" accept="video/mp4,video/x-m4v,video/*" 
+                                                class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10">
+                                            <div class="flex flex-col items-center space-y-4 pointer-events-none">
+                                                <!-- أيقونة الفيديو المتحركة -->
+                                                <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                                    <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                                    </svg>
+                                                </div>
+                                                <!-- نص الإرشاد -->
+                                                <div class="text-center">
+                                                    <p class="text-lg font-semibold text-indigo-700 group-hover:text-indigo-800" data-translate="services_web.services_two_site.service_title">
+                                                        اختر ملف فيديو
+                                                    </p>
+                                                    <p class="text-sm text-gray-500 group-hover:text-gray-600" data-translate="services_web.services_two_site.service_description">
+                                                        أو قم بسحب وإفلات الملف هنا
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- عرض اسم الملف المختار -->
+                                        <div id="selectedFileName" class="hidden">
+                                            <div class="flex items-center justify-center space-x-2 rtl:space-x-reverse bg-white px-4 py-2 rounded-lg">
+                                                <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                                </svg>
+                                                <span class="text-sm font-medium text-gray-700"></span>
+                                            </div>
+                                        </div>
+                                        <!-- الصيغ المدعومة -->
+                                        <div class="flex flex-wrap justify-center gap-2">
+                                            <span class="px-3 py-1 text-xs font-medium text-indigo-600 bg-indigo-100 rounded-full">MP4</span>
+                                            <span class="px-3 py-1 text-xs font-medium text-purple-600 bg-purple-100 rounded-full">AVI</span>
+                                            <span class="px-3 py-1 text-xs font-medium text-blue-600 bg-blue-100 rounded-full">MOV</span>
+                                            <span class="px-3 py-1 text-xs font-medium text-pink-600 bg-pink-100 rounded-full">MKV</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- إضافة دعم السحب والإفلات -->
+                                <script>
+                                    const dropZone = document.querySelector('.bg-gradient-to-r');
+                                    
+                                    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                                        dropZone.addEventListener(eventName, preventDefaults, false);
+                                    });
+
+                                    function preventDefaults(e) {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                    }
+
+                                    ['dragenter', 'dragover'].forEach(eventName => {
+                                        dropZone.addEventListener(eventName, highlight, false);
+                                    });
+
+                                    ['dragleave', 'drop'].forEach(eventName => {
+                                        dropZone.addEventListener(eventName, unhighlight, false);
+                                    });
+
+                                    function highlight(e) {
+                                        dropZone.classList.add('border-indigo-500');
+                                    }
+
+                                    function unhighlight(e) {
+                                        dropZone.classList.remove('border-indigo-500');
+                                    }
+
+                                    dropZone.addEventListener('drop', handleDrop, false);
+
+                                    function handleDrop(e) {
+                                        e.preventDefault();
+                                        dropZone.classList.remove('border-indigo-500');
+                                        const dt = e.dataTransfer;
+                                        const file = dt.files[0];
+                                        const fileInput = document.getElementById('videoFile');
+                                        
+                                        // تحديث قيمة حقل الإدخال
+                                        const dataTransfer = new DataTransfer();
+                                        dataTransfer.items.add(file);
+                                        fileInput.files = dataTransfer.files;
+                                        
+                                        // تحديث عرض اسم الملف
+                                        const fileNameDiv = document.getElementById('selectedFileName');
+                                        fileNameDiv.querySelector('span').textContent = file.name;
+                                        fileNameDiv.classList.remove('hidden');
+                                    }
+                                </script>
+                            </div>
+                            
+                            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                                <label class="block text-gray-700 font-medium mb-3" for="audioFormat" data-translate="services_web.services_two_site.format_title">
+                                    اختر صيغة الصوت:
+                                </label>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <label class="flex items-center space-x-3 rtl:space-x-reverse">
+                                        <input type="radio" name="audioFormat" value="mp3" checked
+                                            class="form-radio h-4 w-4 text-indigo-600">
+                                        <span class="text-gray-700" data-translate="services_web.services_two_site.format_options1">MP3 (الأكثر شيوعاً)</span>
+                                    </label>
+                                    <label class="flex items-center space-x-3 rtl:space-x-reverse">
+                                        <input type="radio" name="audioFormat" value="wav"
+                                            class="form-radio h-4 w-4 text-indigo-600">
+                                        <span class="text-gray-700" data-translate="services_web.services_two_site.format_options2">WAV (جودة عالية)</span>
+                                    </label>
+                                    <label class="flex items-center space-x-3 rtl:space-x-reverse">
+                                        <input type="radio" name="audioFormat" value="aac"
+                                            class="form-radio h-4 w-4 text-indigo-600">
+                                        <span class="text-gray-700" data-translate="services_web.services_two_site.format_options3">AAC (حجم صغير)</span>
+                                    </label>
+                                    <label class="flex items-center space-x-3 rtl:space-x-reverse">
+                                        <input type="radio" name="audioFormat" value="ogg"
+                                            class="form-radio h-4 w-4 text-indigo-600">
+                                        <span class="text-gray-700" data-translate="services_web.services_two_site.format_options4">OGG (مفتوح المصدر)</span>
+                                    </label>
+                                    <label class="flex items-center space-x-3 rtl:space-x-reverse">
+                                        <input type="radio" name="audioFormat" value="m4a"
+                                            class="form-radio h-4 w-4 text-indigo-600">
+                                        <span class="text-gray-700" data-translate="services_web.services_two_site.format_options5">M4A (متوافق مع Apple)</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <button id="convertButton" class="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors" data-translate="services_web.services_two_site.convert_button">
+                                تحويل إلى صوت
+                            </button>
+                            
+                            <div id="videoProgress" class="mt-4 hidden">
+                                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div id="videoProgressBar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                                </div>
+                                <p id="videoProgressText" class="text-sm text-gray-600 mt-2"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- قسم ضغط الصور -->
+                <div id="imageSection" class="section hidden">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6" data-translate="services.2.title">ضغط الصور</h2>
+                    <div class="upload-zone rounded-xl p-8 text-center mb-6">
+                        <input type="file" id="imageFile" accept="image/*" multiple class="hidden">
+                        <div class="text-gray-600">
+                            <svg class="w-16 h-16 mx-auto mb-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                            </svg>
+                        </div>
+                        <div class="selected-file-name text-lg font-medium mb-2" data-translate="services_web.services_three_site.service_title">لم يتم اختيار ملف</div>
+                        <p class="text-sm text-gray-500" data-translate="services_web.services_three_site.service_description">اضغط هنا أو اسحب الملفات</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2" data-translate="services_web.services_three_site.format_title">جودة الضغط:</label>
+                            <input type="range" id="quality" min="1" max="100" value="80" class="w-full">
+                            <div class="text-center" id="qualityValue">80%</div>
+                        </div>
+                        <button id="compressBtn" class="w-full bg-indigo-600 text-white p-4 rounded-xl hover:bg-indigo-700 transition-all font-medium" data-translate="services_web.services_three_site.format_options">ضغط</button>
+                    </div>
+                </div>
+
+                <!-- قسم تحميل الصور -->
+                <div id="downloadSection" class="section hidden">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6" data-translate="services.3.title">تحميل الصور</h2>
+                    <div class="max-w-xl mx-auto">
+                        <div class="mb-6">
+                            <label for="websiteUrl" class="block text-gray-700 font-medium mb-2" data-translate="services_web.services_four_site.service_title">أدخل رابط الموقع:</label>
+                            <input type="url" id="websiteUrl" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200" placeholder="على سبيل المثال: https://example.com">
+                        </div>
+                        <button onclick="downloadImages()" class="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors" data-translate="services_web.services_four_site.service_button">
+                            تحميل الصور
+                        </button>
+                        <div id="downloadProgress" class="mt-4 hidden">
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div id="progressBar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                            <p id="progressText" class="text-sm text-gray-600 mb-2"></p>
+                            <!-- إضافة قسم لعرض الصور التي تم تحميلها -->
+                            <div id="downloadedImages" class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- مميزات المنصة -->
+    <section id="features" class="py-32 bg-gradient-to-br from-indigo-50 via-white to-purple-50 relative overflow-hidden">
+        <!-- زخارف الخلفية -->
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,black,transparent)]"></div>
+        </div>
+        
+        <!-- الشكل الزخرفي -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div class="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-indigo-500/10 to-purple-500/10 transform rotate-12 scale-150"></div>
+        </div>
+
+        <div class="container mx-auto px-4 max-w-4xl">
+            <!-- العنوان الرئيسي -->
+            <div class="text-center mb-20">
+                <div class="inline-block">
+                    <span class="bg-gradient-to-r from-indigo-500 to-purple-500 text-transparent bg-clip-text text-sm font-bold tracking-wider uppercase mb-4 block" data-translate="features.why_fileflow">لماذا FileFlow؟</span>
+                    <h2 class="text-3xl font-bold" data-translate="features.title_features">المميزات التي تجعلنا الاختيار الأفضل</h2>
+                </div>
+            </div>
+            
+            <!-- البطاقات -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+                <!-- سرعة التحويل -->
+                <div class="group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 hover:shadow-[0_8px_30px_rgb(99,102,241,0.1)] hover:-translate-y-2 relative overflow-hidden border border-gray-100">
+                        <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="relative">
+                            <div class="w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-2xl flex items-center justify-center mb-8 transform transition-transform group-hover:scale-110 group-hover:rotate-6">
+                                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4 group-hover:text-indigo-600 transition-colors" data-translate="fastConversion">سرعة التحويل</h3>
+                            <p class="text-gray-600 leading-relaxed mb-8" data-translate="fastConversionDescription">محرك تحويل متطور يضمن لك الحصول على النتائج في ثوانٍ معدودة مع الحفاظ على أعلى معايير الجودة.</p>
+                            <div class="flex items-center justify-between text-sm pt-6 border-t border-gray-100">
+                                <span class="text-indigo-600 font-semibold flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    تحويل فوري
+                                </span>
+                                <span class="bg-indigo-50 text-indigo-600 px-4 py-1.5 rounded-full font-medium">سريع جداً</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- حماية وخصوصية -->
+                <div class="group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 hover:shadow-[0_8px_30px_rgb(99,102,241,0.1)] hover:-translate-y-2 relative overflow-hidden border border-gray-100">
+                        <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="relative">
+                            <div class="w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-2xl flex items-center justify-center mb-8 transform transition-transform group-hover:scale-110 group-hover:rotate-6">
+                                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4 group-hover:text-indigo-600 transition-colors" data-translate="security">حماية وخصوصية</h3>
+                            <p class="text-gray-600 leading-relaxed mb-8" data-translate="securityDescription">نضمن لك أعلى مستويات الحماية والخصوصية لملفاتك. جميع الملفات يتم تشفيرها وحذفها تلقائياً بعد التحويل.</p>
+                            <div class="flex items-center justify-between text-sm pt-6 border-t border-gray-100">
+                                <span class="text-indigo-600 font-semibold flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                                    </svg>
+                                    تشفير SSL
+                                </span>
+                                <span class="bg-indigo-50 text-indigo-600 px-4 py-1.5 rounded-full font-medium">آمن 100%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- جودة عالية -->
+                <div class="group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300 hover:shadow-[0_8px_30px_rgb(99,102,241,0.1)] hover:-translate-y-2 relative overflow-hidden border border-gray-100">
+                        <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div class="relative">
+                            <div class="w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-2xl flex items-center justify-center mb-8 transform transition-transform group-hover:scale-110 group-hover:rotate-6">
+                                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4 group-hover:text-indigo-600 transition-colors" data-translate="highQuality">جودة عالية</h3>
+                            <p class="text-gray-600 leading-relaxed mb-8" data-translate="highQualityDescription">نستخدم خوارزميات متقدمة للحصول على أعلى جودة ممكنة مع خيارات تخصيص متعددة تناسب احتياجاتك.</p>
+                            <div class="flex items-center justify-between text-sm pt-6 border-t border-gray-100">
+                                <span class="text-indigo-600 font-semibold flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
+                                    </svg>
+                                    دقة عالية
+                                </span>
+                                <span class="bg-indigo-50 text-indigo-600 px-4 py-1.5 rounded-full font-medium">HD Quality</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- شريط المؤشرات -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 relative">
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-purple-500/5 rounded-2xl -m-2 group-hover:scale-105 transition-transform duration-300"></div>
+                    <div class="relative text-center bg-white/50 backdrop-blur-xl rounded-2xl p-6 border border-gray-100">
+                        <div class="text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text mb-2">+1M</div>
+                        <p class="text-gray-600 font-medium" data-translate="features.other_features.0.other_one">مستخدم نشط</p>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-purple-500/5 rounded-2xl -m-2 group-hover:scale-105 transition-transform duration-300"></div>
+                    <div class="relative text-center bg-white/50 backdrop-blur-xl rounded-2xl p-6 border border-gray-100">
+                        <div class="text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text mb-2">99%</div>
+                        <p class="text-gray-600 font-medium" data-translate="features.other_features.0.other_two">نسبة الرضا</p>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-purple-500/5 rounded-2xl -m-2 group-hover:scale-105 transition-transform duration-300"></div>
+                    <div class="relative text-center bg-white/50 backdrop-blur-xl rounded-2xl p-6 border border-gray-100">
+                        <div class="text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text mb-2">24/7</div>
+                        <p class="text-gray-600 font-medium" data-translate="features.other_features.0.other_three">دعم فني</p>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-purple-500/5 rounded-2xl -m-2 group-hover:scale-105 transition-transform duration-300"></div>
+                    <div class="relative text-center bg-white/50 backdrop-blur-xl rounded-2xl p-6 border border-gray-100">
+                        <div class="text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text mb-2">+50</div>
+                        <p class="text-gray-600 font-medium" data-translate="features.other_features.0.other_four">صيغة مدعومة</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- نموذج التواصل -->
+    <section id="contact" class="py-16 bg-white">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4" data-translate="contact.title">اتصل بنا</h2>
+                <p class="text-gray-600" data-translate="contact.description">نحن هنا لمساعدتك في أي استفسار يتعلق بخدمات FileFlow</p>
+            </div>
+            <form id="contactForm" class="max-w-2xl mx-auto">
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-medium mb-2" data-contact="name">الاسم:</label>
+                    <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-medium mb-2" data-contact="email">البريد الإلكتروني:</label>
+                    <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-medium mb-2" data-contact="subject">الموضوع:</label>
+                    <input type="text" id="subject" name="subject" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-medium mb-2" data-contact="message">الرسالة:</label>
+                    <textarea id="message" name="message" required rows="5" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-indigo-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-indigo-700 transition-colors" data-contact="submit">إرسال الرسالة</button>
+            </form>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+        const socket = io();
+        
+        // Language switcher
+        const languageSelector = document.getElementById('languageSelector');
+        
+        function updateTexts(lang) {
+            const elements = document.querySelectorAll('[data-translate]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    if (element.tagName === 'INPUT' && element.type === 'submit') {
+                        element.value = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+        }
+
+        languageSelector.addEventListener('change', (e) => {
+            updateTexts(e.target.value);
+        });
+
+        // Initialize translations
+        document.addEventListener('DOMContentLoaded', () => {
+            updateTexts(languageSelector.value);
+        });
+
+        function showSection(sectionId) {
+            // إخفاء جميع الأقسام أولاً
+            document.querySelectorAll('.section').forEach(section => {
+                if (section) {
+                    section.style.display = 'none';
+                }
+            });
+
+            // إزالة الفئة النشطة من جميع الأزرار
+            document.querySelectorAll('.nav-link').forEach(button => {
+                button.classList.remove('active');
+                button.style.backgroundColor = '';
+                button.style.color = '#4B5563';
+            });
+
+            // إظهار القسم المحدد
+            const selectedSection = document.getElementById(sectionId);
+            if (selectedSection) {
+                selectedSection.style.display = 'block';
+            }
+
+            // تنشيط الزر المحدد
+            const activeButton = document.querySelector(`button[onclick="showSection('${sectionId}')"]`);
+            if (activeButton) {
+                activeButton.classList.add('active');
+                activeButton.style.backgroundColor = '#4F46E5';
+                activeButton.style.color = 'white';
+            }
+        }
+
+        // عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            // إخفاء جميع الأقسام في البداية
+            document.querySelectorAll('.section').forEach(section => {
+                if (section) {
+                    section.style.display = 'none';
+                }
+            });
+
+            // إظهار قسم الصوت افتراضياً
+            showSection('audioSection');
+
+            // إضافة معالجة النقر للأزرار
+            document.querySelectorAll('.nav-link').forEach(button => {
+                button.addEventListener('click', function() {
+                    const sectionId = this.getAttribute('onclick').match(/'(.*?)'/)[1];
+                    showSection(sectionId);
+                });
+            });
+        });
+    </script>
+
+    <script>
+        // دالة تحميل الصور كما كانت
+        function downloadImages() {
+            const websiteUrl = document.getElementById('websiteUrl').value;
+            if (!websiteUrl) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'خطأ',
+                    text: 'الرجاء إدخال رابط الموقع'
+                });
+                return;
+            }
+
+            // Remove previous socket listeners
+            socket.off('download_progress');
+            socket.off('download_error');
+            socket.off('download_complete');
+            socket.off('image_downloaded');
+
+            // Show progress elements
+            document.getElementById('downloadProgress').classList.remove('hidden');
+            document.getElementById('progressBar').style.width = '0%';
+            document.getElementById('progressText').textContent = 'جاري البدء في التحميل...';
+
+            // Listen for progress updates
+            socket.on('download_progress', (data) => {
+                document.getElementById('progressBar').style.width = data.progress + '%';
+                document.getElementById('progressText').textContent = data.message;
+            });
+
+            // الاستماع لتحديثات تحميل كل صورة
+            socket.on('image_downloaded', (data) => {
+                const downloadedImages = document.getElementById('downloadedImages');
+                const imageCard = document.createElement('div');
+                imageCard.className = 'bg-white rounded-lg shadow p-2 transform hover:scale-105 transition-all';
+                imageCard.innerHTML = `
+                    <img src="data:image/jpeg;base64,${data.image}" alt="${data.filename}" class="w-full h-32 object-cover rounded">
+                    <p class="text-sm text-gray-600 mt-2 truncate">${data.filename}</p>
+                `;
+                downloadedImages.appendChild(imageCard);
+            });
+
+            socket.on('download_error', (data) => {
+                document.getElementById('progressText').textContent = data.error;
+                document.getElementById('progressBar').style.width = '0%';
+                
+                Swal.fire({
+                    icon: 'error',
+                    title: 'خطأ',
+                    text: data.error,
+                    confirmButtonText: 'حسناً'
+                });
+            });
+
+            socket.on('download_complete', (data) => {
+                document.getElementById('progressBar').style.width = '100%';
+                document.getElementById('progressText').textContent = data.message;
+                
+                // تحميل الملف المضغوط مباشرة
+                window.location.href = `/get-zip/${data.download_id}`;
+                
+                Swal.fire({
+                    icon: 'success',
+                    title: 'تم التحميل',
+                    text: data.message,
+                    confirmButtonText: 'حسناً'
+                });
+            });
+
+            // Start the download process
+            socket.emit('start_download', { url: websiteUrl });
+        }
+    </script>
+
+    <script>
+        // دالة تحويل الصوت
+        let isConvertingAudio = false;
+
+        function convertAudioFormat() {
+            if (isConvertingAudio) return;
+
+            const fileInput = document.getElementById('audioFile');
+            const formatSelect = document.getElementById('audioFormat');
+            const file = fileInput.files[0];
+            const selectedFormat = formatSelect.value;
+
+            // التحقق من اختيار الملف
+            if (!file) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'خطأ',
+                    text: 'الرجاء اختيار ملف صوتي أولاً',
+                    confirmButtonText: 'حسناً'
+                });
+                return;
+            }
+
+            // التحقق من اختيار الصيغة
+            if (!selectedFormat) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'خطأ',
+                    text: 'الرجاء اختيار صيغة التحويل',
+                    confirmButtonText: 'حسناً'
+                });
+                return;
+            }
+
+            isConvertingAudio = true;
+
+            // إنشاء FormData
+            const formData = new FormData();
+            formData.append('audio', file);
+            formData.append('format', selectedFormat);
+
+            // إظهار شريط التقدم
+            const progressDiv = document.getElementById('audioProgress');
+            const progressBar = document.getElementById('audioProgressBar');
+            const progressText = document.getElementById('audioProgressText');
+            
+            progressDiv.classList.remove('hidden');
+            progressBar.style.width = '0%';
+            progressText.textContent = 'جاري التحويل...';
+
+            // إرسال الطلب إلى الخادم
+            fetch('/api/convert-audio', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => {
+                        throw new Error(data.error || 'حدث خطأ أثناء التحويل');
+                    });
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                // إنشاء رابط التحميل
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = file.name.replace(/\.[^/.]+$/, '') + '.' + selectedFormat;
+                a.style.display = 'none';
+                document.body.appendChild(a);
+                a.click();
+                
+                // تنظيف الرابط
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                }, 100);
+
+                // تنظيف بعد النجاح
+                fileInput.value = '';
+                formatSelect.selectedIndex = 0;
+                document.getElementById('selectedAudioName').classList.add('hidden');
+
+                // عرض رسالة النجاح
+                Swal.fire({
+                    icon: 'success',
+                    title: 'تم التحويل',
+                    text: 'تم تحويل الصوت بنجاح',
+                    confirmButtonText: 'حسناً'
+                });
+            })
+            .catch(error => {
+                // معالجة الأخطاء
+                progressText.textContent = error.message;
+                progressBar.style.width = '0%';
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'خطأ',
+                    text: error.message,
+                    confirmButtonText: 'حسناً'
+                });
+            })
+            .finally(() => {
+                isConvertingAudio = false;
+            });
+        }
+
+        // إعداد السحب والإفلات
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropZone = document.querySelector('.bg-gradient-to-r');
+            const fileInput = document.getElementById('audioFile');
+
+            if (dropZone && fileInput) {
+                // منع السلوك الافتراضي للسحب والإفلات
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    dropZone.addEventListener(eventName, preventDefaults);
+                });
+
+                function preventDefaults(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+
+                // إضافة تأثيرات السحب
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    dropZone.addEventListener(eventName, () => {
+                        dropZone.classList.add('border-blue-500');
+                    });
+                });
+
+                ['dragleave', 'drop'].forEach(eventName => {
+                    dropZone.addEventListener(eventName, () => {
+                        dropZone.classList.remove('border-blue-500');
+                    });
+                });
+
+                // معالجة إفلات الملف
+                dropZone.addEventListener('drop', function(e) {
+                    const file = e.dataTransfer.files[0];
+                    if (file) {
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(file);
+                        fileInput.files = dataTransfer.files;
+                        
+                        const selectedAudioName = document.getElementById('selectedAudioName');
+                        selectedAudioName.querySelector('span').textContent = file.name;
+                        selectedAudioName.classList.remove('hidden');
+                    }
+                });
+
+                // معالجة اختيار الملف
+                fileInput.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const selectedAudioName = document.getElementById('selectedAudioName');
+                        selectedAudioName.querySelector('span').textContent = file.name;
+                        selectedAudioName.classList.remove('hidden');
+                    }
+                });
+            }
+        });
+    </script>
+
+    <script>
+        // دالة ضغط الصور
+        let isCompressing = false;
+        let selectedFiles = [];
+
+        // تحديث قيمة جودة الضغط
+        document.getElementById('quality').addEventListener('input', function(e) {
+            document.getElementById('qualityValue').textContent = e.target.value + '%';
+        });
+
+        // معالجة اختيار الملفات
+        document.getElementById('imageFile').addEventListener('change', function(e) {
+            selectedFiles = Array.from(e.target.files);
+            updateSelectedFilesUI();
+        });
+
+        // تحديث واجهة المستخدم لعرض الملفات المختارة
+        function updateSelectedFilesUI() {
+            const fileNameDiv = document.querySelector('.selected-file-name');
+            if (selectedFiles.length > 0) {
+                fileNameDiv.textContent = selectedFiles.length === 1 
+                    ? selectedFiles[0].name 
+                    : `تم اختيار ${selectedFiles.length} ملفات`;
+            } else {
+                fileNameDiv.textContent = 'لم يتم اختيار ملف';
+            }
+        }
+
+        // إعداد منطقة السحب والإفلات
+        const uploadZone = document.querySelector('.upload-zone');
+        
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, preventDefaults);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, highlight);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, unhighlight);
+        });
+
+        function highlight() {
+            uploadZone.classList.add('border-indigo-500', 'border-2', 'border-dashed');
+        }
+
+        function unhighlight() {
+            uploadZone.classList.remove('border-indigo-500', 'border-2', 'border-dashed');
+        }
+
+        uploadZone.addEventListener('drop', handleDrop);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            selectedFiles = Array.from(dt.files).filter(file => file.type.startsWith('image/'));
+            updateSelectedFilesUI();
+        }
+
+        // معالجة ضغط الصور
+        document.getElementById('compressBtn').addEventListener('click', async function() {
+            if (isCompressing || selectedFiles.length === 0) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'خطأ',
+                    text: 'الرجاء اختيار صور للضغط',
+                    confirmButtonText: 'حسناً'
+                });
+                return;
+            }
+
+            isCompressing = true;
+
+            // إنشاء FormData
+            const formData = new FormData();
+            selectedFiles.forEach(file => {
+                formData.append('images[]', file);  
+            });
+            formData.append('quality', document.getElementById('quality').value);
+
+            try {
+                const response = await fetch('/api/compress-images', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || 'فشل في ضغط الصور');
+                }
+
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'compressed_images.zip';
+                document.body.appendChild(a);
+                a.click();
+                
+                // تنظيف الرابط
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                }, 100);
+
+                // تنظيف بعد النجاح
+                selectedFiles = [];
+                updateSelectedFilesUI();
+                document.getElementById('imageFile').value = '';
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'تم الضغط',
+                    text: 'تم ضغط الصور بنجاح',
+                    confirmButtonText: 'حسناً'
+                });
+            } catch (error) {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'خطأ',
+                    text: error.message,
+                    confirmButtonText: 'حسناً'
+                });
+            } finally {
+                isCompressing = false;
+            }
+        });
+
+        // تفعيل النقر على منطقة السحب والإفلات
+        uploadZone.addEventListener('click', function() {
+            document.getElementById('imageFile').click();
+        });
+    </script>
+</body>
+<footer class="bg-zinc-700 text-zinc-200 py-8 border-t border-zinc-200">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <div class="flex items-center space-x-3 rtl:space-x-reverse">
+                <svg class="w-8 h-8" viewBox="0 0 48 40" fill="none">
+                    <path d="M6 10C6 8 8 6 10 6H18L22 12H38C40 12 42 14 42 16V34C42 36 40 38 38 38H10C8 38 6 36 6 34V10Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                </svg>
+                <div class="text-sm">
+                    <div class="font-bold text-white">FileFlow</div>
+                    <div class="opacity-75">2024 جميع الحقوق محفوظة</div>
+                </div>
+            </div>
+            <div class="flex space-x-6 rtl:space-x-reverse">
+                <a href="#home" class="hover:text-zinc-400 transition-colors text-zinc-300">الرئيسية</a>
+                <a href="#services" class="hover:text-zinc-400 transition-colors text-zinc-300">خدماتنا</a>
+                <a href="#features" class="hover:text-zinc-400 transition-colors text-zinc-300">المميزات</a>
+                <a href="#contact" class="hover:text-zinc-400 transition-colors text-zinc-300">اتصل بنا</a>
+            </div>
+        </div>
+    </div>
+</footer>
+</html>

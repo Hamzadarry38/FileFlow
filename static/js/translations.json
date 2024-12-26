@@ -1,0 +1,351 @@
+{
+    "website": {
+      "title": {
+        "ar": "FileFlow",
+        "en": "FileFlow",
+        "fr": "FileFlow"
+      },
+      "subtitle": {
+        "ar": "تحويل ملفاتك بسهولة",
+        "en": "Easily Convert Your Files",
+        "fr": "Convertissez vos fichiers facilement"
+      },
+      "menu": {
+        "home": {
+          "ar": "الرئيسية",
+          "en": "Home",
+          "fr": "Accueil"
+        },
+        "services": {
+          "ar": "خدماتنا",
+          "en": "Our Services",
+          "fr": "Nos Services"
+        },
+        "features": {
+          "ar": "المميزات",
+          "en": "Features",
+          "fr": "Fonctionnalités"
+        },
+        "contact": {
+          "ar": "تواصل معنا",
+          "en": "Contact Us",
+          "fr": "Contactez-Nous"
+        }
+      },
+      "language": {
+        "ar": "العربية",
+        "en": "Arabic",
+        "fr": "Arabe"
+      },
+      "hero": {
+        "title": {
+          "ar": "حول ملفاتك بسهولة وسرعة",
+          "en": "Convert Your Files Easily and Quickly",
+          "fr": "Convertissez vos fichiers facilement et rapidement"
+        },
+        "description": {
+          "ar": "منصة متكاملة لتحويل وضغط الملفات بكل سهولة وأمان",
+          "en": "A comprehensive platform for converting and compressing files with ease and security",
+          "fr": "Une plateforme complète pour convertir et compresser vos fichiers en toute simplicité et sécurité"
+        },
+        "cta": {
+          "start_now": {
+            "ar": "ابدأ الآن →",
+            "en": "Start Now →",
+            "fr": "Commencez maintenant →"
+          },
+          "learn_features": {
+            "ar": "تعرف على المميزات",
+            "en": "Discover Features",
+            "fr": "Découvrez les fonctionnalités"
+          }
+        }
+      },
+      "services": [
+        {
+          "title": {
+            "ar": "تحويل الصوت",
+            "en": "Audio Conversion",
+            "fr": "Conversion audio"
+          },
+          "description": {
+            "ar": "تحويل ملفات الصوت إلى صيغ مختلفة",
+            "en": "Convert audio files to different formats",
+            "fr": "Convertissez des fichiers audio en différents formats"
+          }
+        },
+        {
+          "title": {
+            "ar": "تحويل الفيديو إلى صوت",
+            "en": "Convert Video to Audio",
+            "fr": "Convertir une vidéo en audio"
+          },
+          "description": {
+            "ar": "تحويل الفيديو إلى صوت بجودة عالية",
+            "en": "Convert video to audio with high quality",
+            "fr": "Convertissez une vidéo en audio avec une haute qualité"
+          }
+        },
+        {
+          "title": {
+            "ar": "ضغط الصور",
+            "en": "Image Compression",
+            "fr": "Compression d'images"
+          },
+          "description": {
+            "ar": "ضغط حجم الصور مع الحفاظ على جودتها",
+            "en": "Compress image sizes while maintaining quality",
+            "fr": "Compressez la taille des images tout en conservant leur qualité"
+          }
+        },
+        {
+          "title": {
+            "ar": "تحميل الصور",
+            "en": "Image Download",
+            "fr": "Téléchargement d'images"
+          },
+          "description": {
+            "ar": "تحميل الصور من المواقع بسهولة",
+            "en": "Easily download images from websites",
+            "fr": "Téléchargez facilement des images depuis des sites web"
+          }
+        }
+      ],
+
+
+      "services_web": {
+        "services_one_site": {
+          "service_title": {
+            "ar": "اختر ملف صوتي",
+            "en": "Choose an audio file",
+            "fr": "Choisissez un fichier audio"
+          },
+          "service_description": {
+            "ar": "أو قم بسحب وإفلات الملف هنا",
+            "en": "Or drag and drop the file here",
+            "fr": "Ou faites glisser et déposez le fichier ici"
+          },
+          "format_title": {
+            "ar": "اختر صيغة التحويل:",
+            "en": "Choose the conversion format:",
+            "fr": "Choisissez le format de conversion :"
+          },
+          "format_options": {
+            "ar": "اختر الصيغة",
+            "en": "Choose the format",
+            "fr": "Choisissez le format"
+          },
+          "convert_button": {
+            "ar": "تحويل الصوت",
+            "en": "Convert Audio",
+            "fr": "Convertir l'audio"
+          }
+        },
+        "services_two_site": {
+          "service_title": {
+            "ar": "اختر ملف الفيديو:",
+            "en": "Choose a video file:",
+            "fr": "Choisissez un fichier vidéo :"
+          },
+          "service_description": {
+            "ar": "أو قم بسحب وإفلات الملف هنا",
+            "en": "Or drag and drop the file here",
+            "fr": "Ou faites glisser et déposez le fichier ici"
+          },
+          "format_title": {
+            "ar": "اختر صيغة الصوت:",
+            "en": "Choose the audio format:",
+            "fr": "Choisissez le format audio :"
+          },
+          "format_options1": {
+            "ar": "MP3 (الأكثر شيوعاً)",
+            "en": "MP3 (Most Common)",
+            "fr": "MP3 (le plus courant)"
+          },
+          "format_options2": {
+            "ar": "WAV (جودة عالية)",
+            "en": "WAV (High Quality)",
+            "fr": "WAV (Haute qualité)"
+          },
+          "format_options3": {
+            "ar": "AAC (حجم صغير)",
+            "en": "AAC (Small Size)",
+            "fr": "AAC (Petite taille)"
+          },
+          "format_options4": {
+            "ar": "OGG (مفتوح المصدر)",
+            "en": "OGG (Open Source)",
+            "fr": "OGG (Open Source)"
+          },
+          "format_options5": {
+            "ar": "M4A (متوافق مع Apple)",
+            "en": "M4A (Apple Compatible)",
+            "fr": "M4A (Compatible avec Apple)"
+          },
+          "convert_button": {
+            "ar": "تحويل إلى صوت",
+            "en": "Convert to Audio",
+            "fr": "Convertir en audio"
+          }
+        },
+        "services_three_site": {
+          "service_title": {
+            "ar": "لم يتم اختيار ملف",
+            "en": "No file selected",
+            "fr": "Aucun fichier sélectionné"
+          },
+          "service_description": {
+            "ar": "اضغط هنا أو اسحب الملفات",
+            "en": "Click here or drag files",
+            "fr": "Cliquez ici ou faites glisser des fichiers"
+          },
+          "format_title": {
+            "ar": "جودة الضغط:",
+            "en": "Compression Quality:",
+            "fr": "Qualité de compression :"
+          },
+          "format_options": {
+            "ar": "ضغط",
+            "en": "Compress",
+            "fr": "Compresser"
+          }
+        },
+        "services_four_site": {
+          "service_title": {
+            "ar": "أدخل رابط الموقع هنا",
+            "en": "Enter the website link here",
+            "fr": "Entrez le lien du site web ici"
+          },
+          "service_button": {
+            "ar": "تحميل الصور",
+            "en": "Image Download",
+            "fr": "Téléchargement d'images"
+          }
+        }
+      },
+
+
+
+
+
+
+      "title_services": {
+        "ar": "خدمات FileFlow",
+        "en": "FileFlow Services",
+        "fr": "Services FileFlow"
+      },
+      "features": {
+        "why_fileflow": {
+          "ar": "لماذا FileFlow؟",
+          "en": "Why FileFlow?",
+          "fr": "Pourquoi FileFlow ?"
+        },
+        "title_features": {
+          "ar": "المميزات التي تجعلنا الاختيار الأفضل",
+          "en": "Features that make us the best choice",
+          "fr": "Fonctionnalités qui font de nous le meilleur choix"
+        },
+        "advantages": [
+          {
+            "title": {
+              "ar": "سرعة التحويل",
+              "en": "Conversion Speed",
+              "fr": "Vitesse de conversion"
+            },
+            "description": {
+              "ar": "محرك تحويل متطور يضمن لك الحصول على النتائج في ثوانٍ معدودة مع الحفاظ على أعلى معايير الجودة.",
+              "en": "An advanced conversion engine ensures results in seconds with the highest quality standards maintained.",
+              "fr": "Un moteur de conversion avancé garantit des résultats en quelques secondes tout en maintenant les plus hauts standards de qualité."
+            }
+          },
+          {
+            "title": {
+              "ar": "حماية وخصوصية",
+              "en": "Security and Privacy",
+              "fr": "Sécurité et confidentialité"
+            },
+            "description": {
+              "ar": "نضمن لك أعلى مستويات الحماية والخصوصية لملفاتك. جميع الملفات يتم تشفيرها وحذفها تلقائياً بعد التحويل.",
+              "en": "We ensure the highest levels of security and privacy for your files. All files are encrypted and automatically deleted after conversion.",
+              "fr": "Nous garantissons les plus hauts niveaux de sécurité et de confidentialité pour vos fichiers. Tous les fichiers sont cryptés et automatiquement supprimés après conversion."
+            }
+          },
+          {
+            "title": {
+              "ar": "جودة عالية",
+              "en": "High Quality",
+              "fr": "Haute qualité"
+            },
+            "description": {
+              "ar": "نستخدم خوارزميات متقدمة للحصول على أعلى جودة ممكنة مع خيارات تخصيص متعددة تناسب احتياجاتك.",
+              "en": "We use advanced algorithms to deliver the highest possible quality with multiple customization options to suit your needs.",
+              "fr": "Nous utilisons des algorithmes avancés pour offrir la meilleure qualité possible avec de multiples options de personnalisation adaptées à vos besoins."
+            }
+          }
+        ],
+        "other_features": [
+          {
+            "other_one": {
+              "ar": "مستخدم نشط",
+              "en": "Active User",
+              "fr": "Utilisateur actif"
+            },
+            "other_two": {
+              "ar": "نسبة الرضا",
+              "en": "Satisfaction Rate",
+              "fr": "Taux de satisfaction"
+            },
+            "other_three": {
+              "ar": "دعم فني",
+              "en": "Technical Support",
+              "fr": "Support technique"
+            },
+            "other_four": {
+              "ar": "صيغة مدعومة",
+              "en": "File Format Support",
+              "fr": "Support de format de fichier"
+            }
+          }
+        ]
+      },
+      "contact": {
+        "title": {
+          "ar": "اتصل بنا",
+          "en": "Contact Us",
+          "fr": "Contactez-Nous"
+        },
+        "description": {
+          "ar": "نحن هنا لمساعدتك في أي استفسار يتعلق بخدمات FileFlow",
+          "en": "We're here to assist you with any inquiries related to FileFlow services",
+          "fr": "Nous sommes ici pour vous aider avec tout type de demande concernant nos services FileFlow"
+        },
+        "form": {
+          "name": {
+            "ar": "الاسم:",
+            "en": "Name:",
+            "fr": "Nom :"
+          },
+          "email": {
+            "ar": "البريد الإلكتروني:",
+            "en": "Email:",
+            "fr": "E-mail :"
+          },
+          "subject": {
+            "ar": "الموضوع:",
+            "en": "Subject:",
+            "fr": "Sujet :"
+          },
+          "message": {
+            "ar": "الرسالة:",
+            "en": "Message:",
+            "fr": "Message :"
+          },
+          "submit": {
+            "ar": "إرسال الرسالة",
+            "en": "Send Message",
+            "fr": "Envoyer le message"
+          }
+        }
+      }
+    }
+}
